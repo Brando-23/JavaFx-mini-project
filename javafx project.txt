@@ -1,0 +1,520 @@
+
+//package application;
+//	
+//import javafx.application.Application;
+//import javafx.event.ActionEvent;
+//import javafx.event.EventHandler;
+//import javafx.geometry.Insets;
+//import javafx.geometry.Pos;
+//import javafx.scene.Scene;
+//import javafx.scene.control.Alert;
+//import javafx.scene.control.Alert.AlertType;
+//import javafx.scene.control.Button;
+//import javafx.scene.control.CheckBox;
+//import javafx.scene.control.Hyperlink;
+//import javafx.scene.control.Label;
+//import javafx.scene.control.TextField;
+//import javafx.scene.image.Image;
+//import javafx.scene.layout.Background;
+//import javafx.scene.layout.BackgroundFill;
+//import javafx.scene.layout.GridPane;
+//import javafx.scene.layout.HBox;
+//import javafx.scene.layout.Pane;
+//import javafx.scene.layout.VBox;
+//import javafx.scene.paint.Color;
+//import javafx.scene.text.Font;
+//import javafx.stage.Stage;
+//import javafx.stage.Window;
+//import javafx.scene.layout.CornerRadii;
+//import java.sql.PreparedStatement;
+//import java.sql.*;
+//
+//
+//public class Marlon extends Application {
+//	private static Connection con=null;
+////	private static PreparedStatement stmt;
+////	private static ResultSet rs;
+//
+//
+//	private Stage stg1,stg2;
+//	private Scene s1,s2,s3,s4,inter,sc1;
+//	
+//    @Override
+//    public void start(Stage primaryStage) throws Exception{
+//    	
+//    	
+//    	
+//    	Pane first = new Pane();
+//        first.setBackground(new Background(new BackgroundFill(Color.rgb(204, 229, 255), new CornerRadii(0), new Insets(0))));
+//
+//        Label l =new Label();
+//        l.setText("     ONLINE BOOKBANK ");
+//        l.setFont(Font.font(50));
+//        l.setMaxSize(1000,1000);
+//        l.setAlignment(Pos.CENTER);
+//        l.setTextFill(Color.WHITE);
+//        l.setStyle("-fx-font-weight:bold;");
+//        l.setPadding(new Insets(170,50,25,150));
+//        Button log=new Button("LOGIN");
+//        Button sin=new Button("REGISTER");
+//        log.setPrefHeight(20);
+//        log.setPrefWidth(70);
+//        log.setStyle("-fx-font-size:14px");
+//        log.setStyle("-fx-background-color:black;-fx-text-fill:white");
+//
+//        log.setAlignment(Pos.CENTER);
+//        log.setLayoutX(410);
+//        log.setLayoutY(330);
+//        sin.setLayoutX(410);
+//        sin.setLayoutY(380);
+//        sin.setStyle("-fx-font-size:14px");
+//        sin.setStyle("-fx-background-color:black;-fx-text-fill:white");
+//
+//        log.setOnAction(e->call());
+//        sin.setOnAction(e->call1());
+//
+//        first.getChildren().addAll(l,log,sin);
+//        inter= new Scene(first, 900, 600,Color.AQUA);
+//        primaryStage.setScene(inter);
+//    	
+//    	
+//        GridPane grid = new GridPane();
+//        grid.setBackground(new Background(new BackgroundFill(Color.rgb(204, 229, 255), new CornerRadii(0), new Insets(0))));
+//        grid.setAlignment(Pos.CENTER);
+//        grid.setHgap(10);
+//        grid.setVgap(10);
+//        grid.setPadding(new Insets(25, 25, 25, 25));
+//
+//        Label user = new Label("User ID");
+//        user.setStyle("-fx-font-weight: bold;");
+//        Label dept = new Label("Department");
+//        dept.setStyle("-fx-font-weight: bold;");
+//        Label yr = new Label("Year");
+//        yr.setStyle("-fx-font-weight: bold;");
+//
+//        TextField us = new TextField();
+//        us.setPromptText("enter id");
+//        TextField dp = new TextField();
+//        dp.setPromptText("enter department");
+//        TextField yer = new TextField();
+//        yer.setPromptText("enter year");
+//
+//        Button submitButton = new Button("LOGIN");
+//        
+////        submitButton.setOnAction(new EventHandler<ActionEvent>() {
+////            @Override
+////            public void handle(ActionEvent event) {
+////            	int n=Integer.parseInt(us.getText());
+////            	  String department=dp.getText();
+////            	  int n1=Integer.parseInt(yer.getText());
+////            		try {
+////            			String sq="INSERT INTO REGISTRATION VALUES("+n+","+department+","+n1+")";
+////            			stmt = con.createStatement();
+////            			stmt.executeUpdate(sq);
+////            			
+////            		}
+////            		catch(Exception a)
+////            		{
+////            			System.out.println(a);
+////            		}
+////            		
+////            	
+////            }
+////        });
+//        
+//        
+//        submitButton.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//                if (us.getText().isEmpty()) {
+//                    showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Form Error!", "Please enter your name");
+//                    return;
+//                }
+//                if (dp.getText().isEmpty()) {
+//                    showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Form Error!", "Please enter your email id");
+//                    return;
+//                }
+//                if (yer.getText().isEmpty()) {
+//                    showAlert(Alert.AlertType.ERROR, grid.getScene().getWindow(), "Form Error!", "Please enter a password");
+//                    return;
+//                }
+//                
+//                int n=Integer.parseInt(us.getText());
+//          	  String department=dp.getText();
+//          	  int n1=Integer.parseInt(yer.getText());
+//          		try {
+//          			
+//          			PreparedStatement stmt=con.prepareStatement("INSERT INTO REGISTRATION VALUES(?,?,?)");
+//          			((PreparedStatement) stmt).setInt(1,n);
+//          			((PreparedStatement) stmt).setString(2,department);
+//          			((PreparedStatement) stmt).setInt(3,n1);
+//          			int i=stmt.executeUpdate();
+//          			System.out.println(i+"= record inserted");
+//          			con.close();
+//          			
+//          		}
+//          		catch(Exception a)
+//          		{
+//          			System.out.println(a);
+//          		}
+//
+//                showAlert(Alert.AlertType.CONFIRMATION, grid.getScene().getWindow(), "Login Successful!", "Welcome " + us.getText());
+//                submitButton.setOnAction(e -> goTo());
+//            }
+//
+//            private void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
+//                Alert alert = new Alert(alertType);
+//                alert.setTitle(title);
+//                alert.setHeaderText(null);
+//                alert.setContentText(message);
+//                alert.initOwner(owner);
+//                alert.show();
+//            }
+//            
+//        });
+//   
+//
+//        grid.add(user, 0, 0);
+//        grid.add(us, 1, 0);
+//        grid.add(dept, 0, 1);
+//        grid.add(dp, 1, 1);
+//        grid.add(yr, 0, 2);
+//        grid.add(yer, 1, 2);
+//        grid.add(submitButton, 1, 4);
+//
+//       
+//       Scene scene = new Scene(grid, 900, 600,Color.AQUA);
+//       s1=scene;  
+//       
+//       GridPane grid1 = new GridPane();
+//       grid1.setBackground(new Background(new BackgroundFill(Color.rgb(204, 229, 255), new CornerRadii(0), new Insets(0))));
+//       grid1.setAlignment(Pos.CENTER);
+//       grid1.setHgap(10);
+//       grid1.setVgap(10);
+//       grid1.setPadding(new Insets(25, 25, 25, 25));
+//
+//       Label user1 = new Label("First name");
+//       user1.setStyle("-fx-font-weight: bold;");
+//       Label dept1 = new Label("Last name");
+//       dept1.setStyle("-fx-font-weight: bold;");
+//       Label yr1 = new Label("Email id");
+//       yr1.setStyle("-fx-font-weight: bold;");
+//       Label dob = new Label("Department");
+//       dob.setStyle("-fx-font-weight: bold;");
+//       Label cos = new Label("Course");
+//       cos.setStyle("-fx-font-weight: bold;");
+//       Label num = new Label("Mobile number");
+//       num.setStyle("-fx-font-weight: bold;");
+//
+//       TextField us1 = new TextField();
+//       us1.setPromptText("Enter first name");
+//       TextField dp1 = new TextField();
+//       dp1.setPromptText("Enter last name");
+//       TextField yer1 = new TextField();
+//       yer1.setPromptText("Enter email");
+//       TextField dob1 = new TextField();
+//       dob1.setPromptText("Enter department");
+//       TextField cos1 = new TextField();
+//       cos1.setPromptText("Enter course");
+//       TextField num1 = new TextField();
+//       num1.setPromptText("Enter mobile number");
+//
+//       Button submitButton1 = new Button("SUBMIT");
+//       submitButton1.setOnAction(new EventHandler<ActionEvent>() {
+//           @Override
+//           public void handle(ActionEvent event) {
+//               if (us1.getText().isEmpty()) {
+//                   showAlert(Alert.AlertType.ERROR, grid1.getScene().getWindow(), "Form Error!", "Please enter your first name");
+//                   return;
+//               }
+//               if (dp1.getText().isEmpty()) {
+//                   showAlert(Alert.AlertType.ERROR, grid1.getScene().getWindow(), "Form Error!", "Please enter your last name");
+//                   return;
+//               }
+//               if (yer1.getText().isEmpty()) {
+//                   showAlert(Alert.AlertType.ERROR, grid1.getScene().getWindow(), "Form Error!", "Please enter your email id");
+//                   return;
+//               }
+//               if (dob1.getText().isEmpty()) {
+//                   showAlert(Alert.AlertType.ERROR, grid1.getScene().getWindow(), "Form Error!", "Please enter your department");
+//                   return;
+//               }
+//               if (cos1.getText().isEmpty()) {
+//                   showAlert(Alert.AlertType.ERROR, grid1.getScene().getWindow(), "Form Error!", "Please enter your course");
+//                   return;
+//               }
+//               if (num1.getText().isEmpty()) {
+//                   showAlert(Alert.AlertType.ERROR, grid1.getScene().getWindow(), "Form Error!", "Please enter your mobile number");
+//                   return;
+//               }
+//               String fn=us1.getText();
+//    		   String ln=dp1.getText();
+//    		   String yr=yer1.getText();
+//    		   String dp=dob1.getText();
+//    		   int n=Integer.parseInt(num1.getText());
+//    		   String cr=cos1.getText();
+//    		   
+//    		   try {
+//         			
+//         			PreparedStatement stmt=con.prepareStatement("INSERT INTO LOGIN VALUES(?,?,?,?,?,?)");
+//         			((PreparedStatement) stmt).setString(1,fn);
+//         			((PreparedStatement) stmt).setString(2,ln);
+//         			((PreparedStatement) stmt).setString(3,yr);
+//         			((PreparedStatement) stmt).setString(4,dp);
+//         			((PreparedStatement) stmt).setInt(5,n);
+//         			((PreparedStatement) stmt).setString(6,cr);
+//         			int i=stmt.executeUpdate();
+//         			System.out.println(i+"= record inserted");
+//         			con.close();
+//         			
+//         		}
+//         		catch(Exception a)
+//         		{
+//         			System.out.println(a);
+//         		}
+//    		   
+//
+//               showAlert(Alert.AlertType.CONFIRMATION, grid1.getScene().getWindow(), "Registration Successful!", "Welcome " + us1.getText());
+//               submitButton1.setOnAction(e -> goTo());
+//           }
+//         
+//
+//           private void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
+//               Alert alert = new Alert(alertType);
+//               alert.setTitle(title);
+//               alert.setHeaderText(null);
+//               alert.setContentText(message);
+//               alert.initOwner(owner);
+//               alert.show();
+//           }
+//       });
+////           submitButton1.setOnAction(new EventHandler<ActionEvent>() {
+////        	   public void handle(ActionEvent event) {
+////        		   String fn=us1.getText();
+////        		   String ln=dp1.getText();
+////        		   String yr=yer1.getText();
+////        		   String dp=dob1.getText();
+////        		   int n=Integer.parseInt(num1.getText());
+////        		   String cr=cos1.getText();
+////        		   
+////        	   }
+////        	   
+////           });
+//
+//       grid1.add(user1,   0, 0);
+//       grid1.add(us1,     1, 0);
+//
+//       grid1.add(dept1,   0, 1);
+//       grid1.add(dp1,     1, 1);
+//
+//       grid1.add(yr1,     0, 2);
+//       grid1.add(yer1,    1, 2);
+//
+//       grid1.add(cos,     0, 3);
+//       grid1.add(cos1,    1, 3);
+//
+//       grid1.add(num,     0, 4);
+//       grid1.add(num1,    1, 4);
+//
+//       grid1.add(dob,     0, 5);
+//       grid1.add(dob1,    1, 5);
+//
+//       grid1.add(submitButton1, 1, 6);
+//
+//      Scene scene1 = new Scene(grid1, 900, 600,Color.AQUA);
+//      sc1=scene1;  
+//
+//       
+//                                                
+//        Label l2 = new Label("CHOOSE YOUR SEMESTER:      ");  
+//   	    l2.setStyle("-fx-font-weight: bold;");
+//   	    l2.setFont(new Font("Arial", 35));
+//   	    CheckBox c1 = new CheckBox("SEMESTER-1");  
+//   	    c1.setFont(new Font("Arial", 20));
+//   	 c1.setOnAction(e->sub1());
+//   	    CheckBox c2 = new CheckBox("SEMESTER-2");
+//   	    c2.setFont(new Font("Arial", 20));
+//   	 c2.setOnAction(e->sub2());
+//   	 
+//   	 
+//   	    VBox root = new VBox();  
+//   	    root.getChildren().addAll(l2,c1,c2);
+//   	    root.setSpacing(10);
+//   	     Scene sea=new Scene(root,900,600);
+//   	     s2=sea;
+//   	     
+//   	     
+//   	     
+//   	  Label l21=new Label("SUBJECTS FOR SEMESTER-1");
+//		 l21.setStyle("-fx-font-weight: bold;");
+//		 l21.setFont(Font.font("Cambria", 32));
+//		Hyperlink h1 = new Hyperlink("DIGITAL PRINCIPAL AND CAOMPUTER ORGANIZATION NOTES ");
+//		Hyperlink h2 = new Hyperlink("SOFTWARE ENGINEERING NOTES");
+//		Hyperlink h3 = new Hyperlink("OBJECT ORIENTED PROGRAMMING NOTES");
+//		Hyperlink h4 = new Hyperlink("DATA STRUCTURE NOTES");
+//		Hyperlink h5 = new Hyperlink("MATHS NOTES");
+//		 Button jt = new Button("GO TO PREVIOUS");
+//		 
+//		  jt.setOnAction(e->
+//		  {
+//			  c1.setSelected(false);
+//			  goTo();
+//		  });
+//
+//		h1.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
+//
+//		    @Override
+//		    public void handle(ActionEvent event) {
+//		        getHostServices().showDocument("\"C:\\Users\\USER\\Documents\\brando\\dpco.txt\"");
+//		    }
+//		}); 
+//		h2.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
+//
+//		    @Override
+//		    public void handle(ActionEvent event) {
+//		        getHostServices().showDocument("\"C:\\Users\\USER\\Documents\\brando\\New Text Document.txt\"");
+//		    }
+//		}); 
+//		h3.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
+//
+//		    @Override
+//		    public void handle(ActionEvent event) {
+//		        getHostServices().showDocument("\"C:\\Users\\USER\\Documents\\brando\\oops.txt\"");
+//		    }
+//		}); 
+//		h4.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
+//
+//		    @Override
+//		    public void handle(ActionEvent event) {
+//		        getHostServices().showDocument("\"C:\\Users\\USER\\Documents\\brando\\ds.txt\"");
+//		    }
+//		}); 
+//		h5.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
+//
+//		    @Override
+//		    public void handle(ActionEvent event) {
+//		        getHostServices().showDocument("\"C:\\Users\\USER\\Documents\\brando\\maths.txt\"");
+//		    }
+//		}); 
+//		VBox v = new VBox();  
+//	    v.getChildren().addAll(l21,h1,h2,h3,h4,h5,jt); 
+//		Scene sea3=new Scene(v,900,600);
+//		s3=sea3;
+//		
+//		
+//		
+//		Label l4=new Label("SUBJECTS FOR SEMESTER-2");
+//		 l4.setStyle("-fx-font-weight: bold;");
+//		 l4.setFont(Font.font("Cambria", 32));
+//		Hyperlink h41 = new Hyperlink("MATHS NOTES ");
+//		Hyperlink h42 = new Hyperlink("PHYSICS NOTES ");
+//		Hyperlink h43 = new Hyperlink("PYTHON NOTES ");
+//		Hyperlink h44 = new Hyperlink("DATABASE MANAGEMENT NOTES ");
+//		Hyperlink h45 = new Hyperlink("JAVASCRIPT NOTES");
+//		 Button t = new Button("GO TO PREVIOUS");
+//		  t.setOnAction(e-> {
+//			  c2.setSelected(false);
+//			  goTo();
+//		  });
+//		
+//
+//		h41.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
+//
+//		    @Override
+//		    public void handle(ActionEvent event) {
+//		        getHostServices().showDocument("\"C:\\Users\\USER\\Documents\\brando\\maths.txt\"");
+//		    }
+//		}); 
+//		h42.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
+//
+//		    @Override
+//		    public void handle(ActionEvent event) {
+//		        getHostServices().showDocument("\"C:\\Users\\USER\\Documents\\brando\\phy.txt\"");
+//		    }
+//		}); 
+//		h43.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
+//
+//		    @Override
+//		    public void handle(ActionEvent event) {
+//		        getHostServices().showDocument("\"C:\\Users\\USER\\Documents\\brando\\phython.txt\"");
+//		    }
+//		}); 
+//		h44.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
+//
+//		    @Override
+//		    public void handle(ActionEvent event) {
+//		        getHostServices().showDocument("\"C:\\Users\\USER\\Documents\\brando\\db.txt\"");
+//		    }
+//		}); 
+//		h45.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
+//
+//		    @Override
+//		    public void handle(ActionEvent event) {
+//		        getHostServices().showDocument("\"C:\\Users\\USER\\Documents\\brando\\js.txt\"");
+//		    }
+//		}); 
+//		VBox v4 = new VBox();  
+//	    v4.getChildren().addAll(l4,h41,h42,h43,h44,h45,t); 
+//		Scene sea4=new Scene(v4,900,600);
+//	   s4=sea4; 
+//   	     
+//   	     
+//       
+//       primaryStage.setScene(inter);
+//       primaryStage.setTitle("BOOK BANK");
+//        primaryStage.show();
+//       stg1=primaryStage;
+//       stg2=primaryStage;
+//        
+//  }
+//
+//    
+// 
+//private void sub2() {
+//
+//stg2.setScene(s4);
+//}
+//
+//
+//private void sub1() {
+//
+//	stg2.setScene(s3);
+//
+//}
+//
+//	private void goTo() {
+//    	stg1.setScene(s2);
+//    }
+//private void call() {
+//	stg1.setScene(s1);
+//}
+//private void call1() {
+//	stg1.setScene(sc1);
+//}
+//
+//	public static void main(String[] args) {
+//		dbconnect();
+//	
+//        launch(args);
+//        
+//        
+//    }
+//	public static void dbconnect()
+//	{
+//		try {
+//			Class.forName("com.mysql.jdbc.Driver");
+//			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/sqlconnection","root","W7301@jqir#");
+//			
+//		
+//			
+//		}
+//		catch(Exception e)
+//		{
+//			System.out.println(e);
+//		}
+//	
+//	}
+//
+//
+//
+//}
